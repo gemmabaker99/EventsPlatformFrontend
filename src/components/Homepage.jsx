@@ -11,7 +11,7 @@ function Homepage() {
     const [events, setEvents] = useState([])
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const title = 'Trending Local Events'
+    const title = 'Trending Events'
 
     useEffect(() => {
         fetchEvents()
@@ -31,7 +31,6 @@ function Homepage() {
 
   return (
   <>
-  <NavBar />
   <Banner />
   {loading && <p>Loading events...</p>}
   {error && <p>{error}</p>}

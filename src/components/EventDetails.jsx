@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchEventDetails } from '../../axios';
-import NavBar from './NavBar'
+import { eventSignUp, fetchEventDetails, getCustomEventById } from '../../axios';
 import Footer from './Footer'
 
-function EventDetails() {
+function EventDetails({user}) {
   const { id } = useParams(); 
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -12,16 +11,23 @@ function EventDetails() {
   const [eventImage, setEventImage] = useState(null)
 
   useEffect(() => {
-    fetchEventDetails(id)
+    if(id.match(/([a-z])\w+/gi)){
+      fetchEventDetails(id)
       .then((data) => {
         setEventImage(data.event._embedded.events[0].images[0].url)
         setEvent(data.event._embedded.events[0]);
         setLoading(false);
       })
       .catch((err) => {
-        setError('Failed to load event details');
+        setError('Failed to load event details, please refresh the page');
         setLoading(false);
       });
+    }
+    else {getCustomEventById(id).then((response)=> {
+      setEvent(response.data.event)
+      setLoading(false)
+    })}
+   
   }, [id]);
 
   if (loading) return <p className="text-center mt-10 text-lg">Loading event details...</p>;
@@ -36,10 +42,23 @@ function EventDetails() {
     _embedded
   } = event;
 
-  const venue = _embedded?.venues?.[0]
-  const date = dates?.start?.localDate;
-  const time = dates?.start?.localTime;
-  const genre = classifications?.[0]?.genre?.name;
+  const venue = _embedded?.venues?.[0] || 'tbc'
+  const date = new Date(event.dates?.start?.localDate || event.date).toLocaleDateString('en-GB')
+  const time = dates?.start?.localTime || 'tbc'
+  const genre = classifications?.[0]?.genre?.name
+
+  function handleSignUp (clickedEvent) {
+      eventSignUp(user.id, clickedEvent).then((response)=> {
+        alert(`Sign up successful, you're going to ${event.name}`)
+      }).catch((err)=> {
+        console.error('Signup failed:', err)
+        if (err.response && err.response.status === 409) {
+          alert("You're already signed up for this event.");
+        } else {
+          alert('Something went wrong. Please try again later.');
+        }
+      })
+  }
 
 
 
@@ -80,7 +99,9 @@ function EventDetails() {
             <p className="leading-relaxed">{info}</p>
           </div>
         )}
-
+        {user && 
+          <button className='bg-emerald-500 hover:bg-emerald-950 text-white py-2 px-4 rounded' onClick={() => handleSignUp(event)}>Sign Up</button>
+        }
  
         </div>
 

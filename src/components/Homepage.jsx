@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
-import NavBar from './NavBar'
+import React, { useState, useEffect } from 'react'
 import Banner from './Banner'
 import EventList from './EventList'
 import Footer from './Footer'
-import { fetchEvents } from '../../axios'
-import { useEffect} from 'react'
+import { fetchEvents, getAllCustomEvents } from '../../axios'
 
 function Homepage() {
 
@@ -14,17 +12,19 @@ function Homepage() {
     const title = 'Trending Events'
 
     useEffect(() => {
-        fetchEvents()
-          .then((data) => {
-            console.log(data)
-            setEvents(data);
-            setLoading(false);
-          })
-          .catch((err) => {
-            setError("Failed to load events");
-            setLoading(false);
-            console.error(err);
-          });
+      Promise.all([
+        fetchEvents(),
+        getAllCustomEvents()
+      ]).then(([ticketmasterEvents, customEvents ])=> {
+      const combined = [...customEvents, ...ticketmasterEvents];
+      setEvents(combined);
+      setLoading(false)
+      })
+      .catch((err) => {
+        console.error('Error fetching events:', err);
+        setError("Sorry, we couldn't load events at the moment. Please refresh the page or try again later.");
+        setLoading(false);
+      });
       }, []);
 
     
@@ -32,11 +32,21 @@ function Homepage() {
   return (
   <>
   <Banner />
-  {loading && <p>Loading events...</p>}
-  {error && <p>{error}</p>}
-  <section className='bg-gray-100 py-6'>
-    <EventList title={title} events={events}/>
-  </section>
+  <section className="bg-gray-100 py-6">
+        {loading && <p className="text-center text-lg">Loading events...</p>}
+
+        {!loading && error && (
+          <p className="text-center text-red-500 text-lg">{error}</p>
+        )}
+
+        {!loading && !error && events.length > 0 && (
+          <EventList title={title} events={events} />
+        )}
+
+        {!loading && !error && events.length === 0 && (
+          <p className="text-center text-gray-700">No events found.</p>
+        )}
+      </section>
   <Footer />
   </>
   )

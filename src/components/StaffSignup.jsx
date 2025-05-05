@@ -1,21 +1,20 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { signupUser } from '../../axios';
-import { Link } from 'react-router-dom';
 
-function Signup() {
-  const [formData, setFormData] = useState({
-    name: '',
-    username: '',
-    email: '',
-    password: '',
-    role: 'user'
-  });
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
-  const navigate = useNavigate();
+function StaffSignup() {
+    const [formData, setFormData] = useState({
+        name: '',
+        username: '',
+        email: '',
+        password: '',
+        role: 'staff'
+    })
+const [error, setError] = useState(null)
+const [success, setSuccess] = useState(null);
+const navigate = useNavigate();
 
-  const handleChange = (e) => {
+const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -46,7 +45,7 @@ function Signup() {
 
   return (
     <div className="max-w-md mx-auto p-6 mt-10 bg-white rounded shadow">
-      <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center">Staff Sign Up</h2>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       {success && <p className="text-green-500 mb-4">{success}</p>}
 
@@ -57,7 +56,7 @@ function Signup() {
           placeholder="Name"
           value={formData.name}
           onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded"
+          className="w-full p-2 border border-gray-300 rounded"
         />
         <input
           type="text"
@@ -65,7 +64,7 @@ function Signup() {
           placeholder="Username"
           value={formData.username}
           onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded"
+          className="w-full p-2 border border-gray-300 rounded"
         />
         <input
           type="email"
@@ -73,7 +72,7 @@ function Signup() {
           placeholder="Email address"
           value={formData.email}
           onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded"
+          className="w-full p-2 border border-gray-300 rounded"
         />
         <input
           type="password"
@@ -81,7 +80,7 @@ function Signup() {
           placeholder="Create a password"
           value={formData.password}
           onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded"
+          className="w-full p-2 border border-gray-300 rounded"
         />
         <button
           type="submit"
@@ -98,13 +97,14 @@ function Signup() {
         </Link>
       </p>
       <p className="mt-4 text-sm text-center">
-                Staff?{' '}
-                <Link to="/staffsignup" className="text-blue-500 hover:underline">
-                Sign up here
-                </Link>
-</p>
+        Go to customer signup{' '}
+        <Link to="/signup" className="text-blue-500 hover:underline">
+          here
+        </Link>
+      </p>
     </div>
   );
+
 }
 
-export default Signup;
+export default StaffSignup

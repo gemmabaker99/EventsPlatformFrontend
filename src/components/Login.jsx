@@ -1,10 +1,9 @@
-import React from 'react'
-import NavBar from './NavBar'
-import { useState } from 'react';
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router';
 import { loginUser } from '../../axios';
 
-function Login({user, setUser}) {
+function Login({setUser}) {
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -21,11 +20,10 @@ function Login({user, setUser}) {
         }
 
         loginUser(email, password).then((response)=> {
-          console.log(response)
           setError(null);
           localStorage.setItem('user', JSON.stringify(response.data.user))
           setUser(response.data.user)
-          alert(`Login successful! Welcome ${user.name}`)
+          alert(`Login successful! Welcome ${response.data.user.name}`)
           navigate('/events')
         }).catch((err)=> {
           console.error('login failed', err)
@@ -97,6 +95,7 @@ function Login({user, setUser}) {
                 Sign up here
                 </Link>
 </p>
+
           </div>
         </div>
         

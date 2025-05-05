@@ -1,5 +1,4 @@
 import React from 'react'
-import NavBar from './NavBar'
 import Footer from './Footer'
 import EventList from './EventList'
 import { fetchEvents } from '../../axios'
@@ -11,7 +10,6 @@ function Events() {
         const [error, setError] = useState(null);
         const [city, setCity] = useState('Manchester')
         const [search, setSearch] =useState(false)
-        const title = 'Events in Manchester'
         
     
         useEffect(() => {
@@ -26,7 +24,7 @@ function Events() {
                 setLoading(false);
                 console.error(err);
               });
-          }, [search]);
+          }, [city]);
         
 
           function handleCityChange (e) {
@@ -34,9 +32,9 @@ function Events() {
           };
 
           function handleSearch (e) {
-            e.preventDefault();
+            e.preventDefault()
+            setCity(city)
             setSearch(true)
-            console.log(events, events.length)
           };
  
   return (

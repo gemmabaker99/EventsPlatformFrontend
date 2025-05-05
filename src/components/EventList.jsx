@@ -1,5 +1,6 @@
 import EventCard from "./EventCard";
 import { Link } from "react-router";
+import defaultImg from "../assets/default.jpeg"
 
 
 function EventList({title, events}) {
@@ -8,14 +9,14 @@ function EventList({title, events}) {
         <h2 className="text-2xl font-bold text-gray-800 mb-6">{title}</h2>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {events.map((event) => {
-        const eventImage = event.images[0]?.url
+        const eventImage = event.images?.[0]?.url || defaultImg;
        return (
        <Link 
        to={`/event/${event.id}`}
        key={event.id}
        className="cursor-pointer"
      >
-       <EventCard key={event.id} event={{ ...event, image: eventImage }} />
+       <EventCard event={{ ...event, image: eventImage }} />
        </Link>
        )
         })}

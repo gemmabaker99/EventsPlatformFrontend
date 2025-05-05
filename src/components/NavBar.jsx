@@ -18,14 +18,29 @@ function handleLogout () {
           <Link to='/'>
             <img src={logo} alt="Website Logo" className="max-h-34 w-auto" />
             </Link>
-          <ul className="flex gap-4">
+          <ul className="flex gap-4 items-center">
             <li><a href="/" className="hover:underline">Home</a></li>
             <li><a href="/events" className="hover:underline">Events</a></li>
-            {user ? (
-            <li><button onClick={handleLogout} className='hover:underline'>Logout</button></li>
-          ) : (
-          <li><a href='/login' className='hover:underline'>Login</a></li>
-)}          </ul>
+
+            {user?.role === 'user' && ( <>
+              <li><a href="/userevents" className="hover:underline">My Events</a></li>
+            </>
+          ) }
+
+          {user?.role === 'staff' && (
+           <li><a href="/manageevents" className="hover:underline">Manage Events</a></li>
+
+          )
+          }
+          {!user && (
+           <li><a href='/login' className='hover:underline'>Login</a></li>
+          )
+          }
+          {user && (
+             <li><button onClick={handleLogout} className='"bg-indigo-500 hover:bg-indigo-700 text-white font-semibold py-1 px-3 rounded"'>Logout</button></li>
+          )}
+
+          </ul>
 
         </div>
       </nav>

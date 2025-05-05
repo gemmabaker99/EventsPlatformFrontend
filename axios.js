@@ -2,7 +2,7 @@ import axios from "axios";
 import defaultImg from "./src/assets/default.jpeg";
 
 const app = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: import.meta.env.VITE_API_URL,
   timeout: 5000,
 });
 

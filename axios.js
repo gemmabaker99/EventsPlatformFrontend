@@ -8,7 +8,7 @@ const app = axios.create({
 
 export function fetchEvents(city) {
   return app
-    .get("/events", {
+    .get("/api/events", {
       params: { city },
     })
     .then((response) => {
@@ -17,14 +17,14 @@ export function fetchEvents(city) {
 }
 
 export function fetchEventDetails(id) {
-  return app.get(`/events/${id}`).then((response) => {
+  return app.get(`/api/events/${id}`).then((response) => {
     return response.data;
   });
 }
 
 export function signupUser(formData) {
   return app
-    .post("/users/signup", formData)
+    .post("/api/users/signup", formData)
     .then((response) => {
       return response;
     })
@@ -35,7 +35,7 @@ export function signupUser(formData) {
 
 export function loginUser(email, password) {
   return app
-    .post("/users/login", { email, password })
+    .post("/api/users/login", { email, password })
     .then((response) => {
       return response;
     })
@@ -46,7 +46,7 @@ export function loginUser(email, password) {
 
 export function eventSignUp(userId, event) {
   return app
-    .post(`/userevents/${userId}`, {
+    .post(`/api/userevents/${userId}`, {
       event_id: event.id,
       event_name: event.name,
       event_date: event.dates?.start?.localDate || event.date,
@@ -63,7 +63,7 @@ export function eventSignUp(userId, event) {
 
 export function getUserEvents(userId) {
   return app
-    .get(`/userevents/${userId}`)
+    .get(`/api/userevents/${userId}`)
     .then((response) => {
       return response.data.events;
     })
@@ -75,7 +75,7 @@ export function getUserEvents(userId) {
 
 export function removeUserEvent(eventId, userId) {
   return app
-    .delete(`/userevents/${userId}/${eventId}`)
+    .delete(`/api/userevents/${userId}/${eventId}`)
     .then((response) => {
       return response;
     })
@@ -87,7 +87,7 @@ export function removeUserEvent(eventId, userId) {
 
 export function getCustomEventsForStaff(id) {
   return app
-    .get(`/custom-events/user/${id}`)
+    .get(`/api/custom-events/user/${id}`)
     .then((response) => {
       return response.data.events;
     })
@@ -99,7 +99,7 @@ export function getCustomEventsForStaff(id) {
 
 export function postCustomEvent(eventData) {
   return app
-    .post("/custom-events", eventData)
+    .post("/api/custom-events", eventData)
     .then((response) => {
       return response;
     })
@@ -111,7 +111,7 @@ export function postCustomEvent(eventData) {
 
 export function deleteCustomEvent(eventId) {
   return app
-    .delete(`/custom-events/${eventId}`)
+    .delete(`/api/custom-events/${eventId}`)
     .then((response) => {
       return response;
     })
@@ -123,7 +123,7 @@ export function deleteCustomEvent(eventId) {
 
 export function getAllCustomEvents() {
   return app
-    .get("/custom-events")
+    .get("/api/custom-events")
     .then((response) => {
       return response.data.events;
     })
@@ -135,7 +135,7 @@ export function getAllCustomEvents() {
 
 export function getCustomEventById(id) {
   return app
-    .get(`/custom-events/${id}`)
+    .get(`/api/custom-events/${id}`)
     .then((response) => {
       return response;
     })

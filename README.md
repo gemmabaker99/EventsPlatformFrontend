@@ -1,12 +1,33 @@
-# React + Vite
+## Eventify Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+To visit the hosted version of this site, go to https://eventifyevents.netlify.app/
 
-Currently, two official plugins are available:
+This is the frontend for the Eventify app – a React-based application that allows users to explore public events, sign up to save them, and create custom events for personal or staff use.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The app connects to a separate Express backend and PostgreSQL database, and is styled with tailwind.
 
-## Expanding the ESLint configuration
+Built with:
+-React
+-Vite
+-React Router
+-Axios
+-Render (backend + DB hosting)
+-Netlify (frontend hosting)
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Features:
+-Search for events by city
+
+- Sign up or log in to save events
+- View your saved events
+- Staff: Create and manage custom events
+- User authentication
+- Fully responsive design
+
+## Getting Started Locally
+
+To run this project locally:
+
+git clone https://github.com/gemmabaker99/EventsPlatformFrontend
+npm install
+create a .env file with VITE_BACKEND_URL=https://eventify-api-odn9.onrender.com
+npm run dev to start the app
